@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Juego de la Serpiente</title>
+  <style>
+    body {
+      background-color: #111;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    canvas {
+      border: 2px solid white;
+      background-color: black;
+      display: none; /* oculto al inicio */
+    }
+    #score {
+      margin-top: 10px;
+      font-size: 20px;
+      display: none; /* oculto al inicio */
+    }
+    #menu, #gameOverScreen {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    #gameOverScreen {
+      display: none;
+      background: rgba(20, 5, 75, 0.911);
+      text-align: center;
+    }
+
+    /* 🔥 estilo de botones */
+    button {
+      padding: 12px 24px;
+      font-size: 18px;
+      margin: 10px;
+      border: none;
+      border-radius: 8px;
+      background-color: #28a745;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <!-- Menú de inicio -->
+  <div id="menu">
+    <h1>Serpiente 🐍</h1>
+    <button id="startBtn">Iniciar Juego</button>
+  </div>
+
+  <!-- Pantalla del juego -->
+  <canvas id="gameCanvas" width="800" height="600"></canvas>
+  <div id="score">Puntuación: 0</div>
+
+  <!-- Pantalla de Game Over -->
+  <div id="gameOverScreen">
+    <h2>¡Fin del Juego !</h2>
+    <p id="finalScore"></p>
+    <button id="retryBtn">Reintentar</button>
+    <button id="menuBtn">Volver al Menú</button>
+  </div>
+
+  <script src="serpiente.js"></script>
+</body>
+</html>
+
