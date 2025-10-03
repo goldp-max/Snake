@@ -47,7 +47,7 @@ function draw() {
   );
   ctx.fill();
 
-  // Dibujar manzana🍎
+  // Dibujar manzana
   ctx.fillStyle = "red";
   ctx.beginPath();
   ctx.arc(
@@ -96,3 +96,72 @@ function update() {
   } else {
     snake.pop();
   }
+
+ // Colisión
+  if (
+    head.x < 0 || head.y < 0 ||
+    head.x >= canvas.width / box || head.y >= canvas.height / box ||
+    snake.some(part => part.x === head.x && part.y === head.y)
+  ) {
+    clearInterval(gameInterval);
+    document.getElementById("finalScore").textContent = `Tu puntuación fue: ${score}`;
+    document.getElementById("gameOverScreen").style.display = "block";
+    return;
+  }
+
+  snake.unshift(head);
+}
+
+// Bucle del juego
+function gameLoop() {
+  update();
+  draw();
+}
+
+// Controles
+document.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowUp" && direction.y === 0) {
+    direction = { x: 0, y: -1 };
+  } else if (event.key === "ArrowDown" && direction.y === 0) {
+    direction = { x: 0, y: 1 };
+  } else if (event.key === "ArrowLeft" && direction.x === 0) {
+    direction = { x: -1, y: 0 };
+  } else if (event.key === "ArrowRight" && direction.x === 0) {
+    direction = { x: 1, y: 0 };
+  }
+});
+
+// Iniciar juego
+document.getElementById("startBtn").addEventListener("click", () => {
+  document.getElementById("menu").style.display = "none";
+  document.getElementById("gameOverScreen").style.display = "none";
+  
+  // Mostrar canvas y puntuación
+  document.getElementById("gameCanvas").style.display = "block";
+  document.getElementById("score").style.display = "block";
+
+  score = 0;
+  snake = [{ x: 5, y: 5 }];
+  direction = { x: 1, y: 0 };
+  gameInterval = setInterval(gameLoop, 150);
+});
+
+// Reintentar
+document.getElementById("retryBtn").addEventListener("click", () => {
+  document.getElementById("gameOverScreen").style.display = "none";
+  document.getElementById("gameCanvas").style.display = "block";
+  document.getElementById("score").style.display = "block";
+
+  score = 0;
+  snake = [{ x: 5, y: 5 }];
+  direction = { x: 1, y: 0 };
+  food = generateFood();
+  clearInterval(gameInterval); 
+  gameInterval = setInterval(gameLoop, 150);
+});
+
+// Volver al menú
+document.getElementById("menuBtn").addEventListener("click", () => {
+  document.getElementById("gameOverScreen").style.display = "none";
+  document.getElementById("menu").style.display = "flex";
+});
